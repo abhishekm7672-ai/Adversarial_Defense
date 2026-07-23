@@ -1,4 +1,4 @@
-# Navigo Adversarial Malware Defense System
+# Adversarial Malware Defense System
 
 Enterprise-ready malware detection system hardened against adversarial evasion using GAN-driven training.
 
