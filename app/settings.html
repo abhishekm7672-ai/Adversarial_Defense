@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigo Malware Defense | Settings</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 1rem;
+        }
+
+        .setting-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .setting-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .setting-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .setting-control select, .setting-control input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            color: var(--accent);
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .info-card {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid var(--accent-glow);
+            padding: 1.5rem;
+            border-radius: 16px;
+        }
+
+        .info-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .info-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+        }
+
+        .info-list li span:first-child {
+            color: var(--text-secondary);
+        }
+
+        .info-list li span:last-child {
+            font-family: monospace;
+            color: var(--accent);
+        }
+    </style>
+</head>
+
+<body class="dark-theme">
+<div class="app-container">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="logo-section">
+        <span class="logo-icon">🛡️</span>
+        <span class="logo-text">NAVIGO</span>
+    </div>
+
+    <nav class="side-nav">
+        <a href="/index.html" class="nav-item">Dashboard</a>
+        <a href="/incidents.html" class="nav-item">Incidents</a>
+        <a href="/analytics.html" class="nav-item">Analytics</a>
+        <a href="/settings.html" class="nav-item active">Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="system-status-badge">
+            <span class="pulse green"></span>
+            <span id="api-status-text">SYSTEM ONLINE</span>
+        </div>
+    </div>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main-content">
+
+<header class="header">
+    <div class="header-left">
+        <h1>System Configuration</h1>
+        <p class="subtitle">Manage detection sensitivity and system preferences</p>
+    </div>
+</header>
+
+<div class="settings-grid">
+    
+    <div class="card glass">
+        <h3>Detection Preferences</h3>
+        
+        <div class="setting-item">
+            <div class="setting-info">
+                <span class="setting-title">Sensitivity Threshold</span>
+                <span class="setting-desc">Adjust the global malware detection sensitivity.</span>
+            </div>
+            <div class="setting-control">
+                <input type="range" min="0" max="100" value="85" style="width: 120px;">
+            </div>
+        </div>
+
+        <div class="setting-item">
+            <div class="setting-info">
+                <span class="setting-title">Analysis Depth</span>
+                <span class="setting-desc">Configure static analysis feature coverage.</span>
+            </div>
+            <div class="setting-control">
+                <select>
+                    <option>Standard (518 Features)</option>
+                    <option>Extended (Deep Scan)</option>
+                    <option>Quick (Critical only)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="setting-item">
+            <div class="setting-info">
+                <span class="setting-title">Adversarial Hardening</span>
+                <span class="setting-desc">Enable real-time evasion technique analysis.</span>
+            </div>
+            <div class="setting-control">
+                <select>
+                    <option>Enabled</option>
+                    <option>Disabled</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="info-card">
+        <h3>System Information</h3>
+        
+        <ul class="info-list">
+            <li><span>Model Architecture</span><span>Neural-LGBM Hybrid</span></li>
+            <li><span>Model Version</span><span id="settings-model-version">v1.2.4</span></li>
+            <li><span>Engine Status</span><span class="success-text">ACTIVE</span></li>
+            <li><span>Last Hardening Round</span><span>2026-03-09</span></li>
+            <li><span>Hardware Acceleration</span><span>CUDA v12.1</span></li>
+            <li><span>API Endpoint</span><span>http://localhost:8000</span></li>
+        </ul>
+        
+        <div style="margin-top: 2rem; text-align: center;">
+            <button class="btn secondary" style="width: 100%;">Download System Logs</button>
+        </div>
+    </div>
+
+</div>
+
+</main>
+</div>
+
+<!-- LOADING -->
+<div id="loading-overlay" class="overlay hidden">
+    <div class="spinner"></div>
+    <p>Loading System Intelligence...</p>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigo Malware Defense | Analytics</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .chart-box {
+            height: 300px;
+            margin-bottom: 1rem;
+        }
+
+        .analytics-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .summary-val {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body class="dark-theme">
+<div class="app-container">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="logo-section">
+        <span class="logo-icon">🛡️</span>
+        <span class="logo-text">NAVIGO</span>
+    </div>
+
+    <nav class="side-nav">
+        <a href="/index.html" class="nav-item">Dashboard</a>
+        <a href="/incidents.html" class="nav-item">Incidents</a>
+        <a href="/analytics.html" class="nav-item active">Analytics</a>
+        <a href="/settings.html" class="nav-item">Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="system-status-badge">
+            <span class="pulse green"></span>
+            <span id="api-status-text">SYSTEM ONLINE</span>
+        </div>
+    </div>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main-content">
+
+<header class="header">
+    <div class="header-left">
+        <h1>Operational Analytics</h1>
+        <p class="subtitle">Statistical insights into malware detection performance</p>
+    </div>
+</header>
+
+<div class="analytics-summary">
+    <div class="summary-card">
+        <span id="total-scans-val" class="summary-val">0</span>
+        <span class="summary-label">Total Scans</span>
+    </div>
+    <div class="summary-card">
+        <span id="malicious-count-val" class="summary-val">0</span>
+        <span class="summary-label">Malicious</span>
+    </div>
+    <div class="summary-card">
+        <span id="avg-risk-val" class="summary-val">0%</span>
+        <span class="summary-label">Avg Risk Score</span>
+    </div>
+    <div class="summary-card">
+        <span id="detection-rate-val" class="summary-val">0%</span>
+        <span class="summary-label">Detection Rate</span>
+    </div>
+</div>
+
+<div class="analytics-grid">
+    
+    <div class="card glass">
+        <h3>Threat Distribution</h3>
+        <div class="chart-box">
+            <canvas id="ratioChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card glass">
+        <h3>Risk Score Distribution</h3>
+        <div class="chart-box">
+            <canvas id="riskDistChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card glass" style="grid-column: span 2;">
+        <h3>Hardening Performance (Evasion Rate)</h3>
+        <div class="chart-box">
+            <canvas id="hardeningPerformanceChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+</main>
+</div>
+
+<!-- LOADING -->
+<div id="loading-overlay" class="overlay hidden">
+    <div class="spinner"></div>
+    <p>Loading Intelligence Data...</p>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

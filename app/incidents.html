@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigo Malware Defense | Incidents</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .incident-table-container {
+            margin-top: 2rem;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .risk-badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .risk-high { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        .risk-med { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .risk-low { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+    </style>
+</head>
+
+<body class="dark-theme">
+<div class="app-container">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="logo-section">
+        <span class="logo-icon">🛡️</span>
+        <span class="logo-text">NAVIGO</span>
+    </div>
+
+    <nav class="side-nav">
+        <a href="/index.html" class="nav-item">Dashboard</a>
+        <a href="/incidents.html" class="nav-item active">Incidents</a>
+        <a href="/analytics.html" class="nav-item">Analytics</a>
+        <a href="/settings.html" class="nav-item">Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="system-status-badge">
+            <span class="pulse green"></span>
+            <span id="api-status-text">SYSTEM ONLINE</span>
+        </div>
+    </div>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main-content">
+
+<header class="header">
+    <div class="header-left">
+        <h1>Incident Investigation</h1>
+        <p class="subtitle">Complete history of detected threats and analysis logs</p>
+    </div>
+</header>
+
+<div class="card glass incidents-panel">
+    <h3>SOC Incident History</h3>
+    
+    <div class="incident-table-container">
+        <table id="incident-table">
+            <thead>
+                <tr>
+    <th>Timestamp</th>
+    <th>Scan ID</th>
+    <th>File / Type</th>
+    <th>Risk Score</th>
+    <th>Verdict</th>
+</tr>
+            </thead>
+            <tbody id="incident-tbody">
+                <!-- Populated by JS -->
+            </tbody>
+        </table>
+        <div id="no-incidents" class="empty-state">No incidents recorded yet.</div>
+    </div>
+</div>
+
+</main>
+</div>
+
+<!-- LOADING -->
+<div id="loading-overlay" class="overlay hidden">
+    <div class="spinner"></div>
+    <p>Analyzing Neural Pattern...</p>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

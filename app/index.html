@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigo Malware Defense | XDR Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="dark-theme">
+<div class="app-container">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="logo-section">
+        <span class="logo-icon">🛡️</span>
+        <span class="logo-text">NAVIGO</span>
+    </div>
+
+    <nav class="side-nav">
+        <a href="/index.html" class="nav-item active">Dashboard</a>
+        <a href="/incidents.html" class="nav-item">Incidents</a>
+        <a href="/analytics.html" class="nav-item">Analytics</a>
+        <a href="/settings.html" class="nav-item">Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="system-status-badge">
+            <span class="pulse green"></span>
+            <span id="api-status-text">SYSTEM ONLINE</span>
+        </div>
+    </div>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main-content">
+
+<header class="header">
+
+    <div class="header-left">
+        <h1>Security Operations Center <span class="badge">PRO</span></h1>
+        <p class="subtitle">Real-time Adversarial Malware Detection & Hardening</p>
+    </div>
+
+    <div class="header-right">
+        <div class="model-info">
+            <span class="label">VERSION</span>
+            <span id="model-version" class="value">v1.2.4</span>
+        </div>
+    </div>
+
+</header>
+
+<!-- DASHBOARD GRID -->
+<div class="dashboard-grid">
+
+<!-- RISK PANEL -->
+<div class="card glass risk-panel">
+
+<h3>Current Risk Analysis</h3>
+
+<div class="gauge-container">
+<canvas id="riskGauge"></canvas>
+<div class="gauge-value">
+<span id="risk-score-display">0%</span>
+<span class="label">FINAL RISK</span>
+</div>
+</div>
+
+<div class="risk-details">
+<div class="detail-item">
+<span class="label">Malware Prob.</span>
+<span id="malware-prob" class="value">0.00%</span>
+</div>
+<div class="detail-item">
+<span class="label">Suspicion Score</span>
+<span id="suspicion-score" class="value">0.00</span>
+</div>
+</div>
+
+</div>
+
+
+<!-- METRICS PANEL -->
+<div class="card glass metrics-panel">
+
+<h3>Performance Metrics</h3>
+
+<div class="metrics-grid">
+<div class="metric-card">
+<span class="m-label">INITIAL ROBUSTNESS</span>
+<span id="m-initial-rob" class="m-value">--</span>
+</div>
+<div class="metric-card highlight">
+<span class="m-label">ANTIFRAGILITY INDEX</span>
+<span id="m-antifragility" class="m-value">--</span>
+</div>
+<div class="metric-card">
+<span class="m-label">HARDENING ROUNDS</span>
+<span id="m-rounds" class="m-value">--</span>
+</div>
+<div class="metric-card">
+<span class="m-label">MODEL STABILITY</span>
+<span id="m-stability" class="m-value">--</span>
+</div>
+</div>
+
+<div class="chart-container">
+<canvas id="hardeningChart"></canvas>
+</div>
+
+</div>
+
+
+<!-- INFERENCE ENGINE -->
+<div class="card glass detection-panel">
+
+<h3>Inference Engine</h3>
+
+<div class="input-section">
+
+<label>PE File Features (Input Data)</label>
+<textarea id="feature-input" placeholder="Paste JSON array or CSV features here..."></textarea>
+
+<div class="actions">
+<button id="run-detection" class="btn primary">Scan Sample</button>
+<button id="load-sample" class="btn secondary">Load Test Malware</button>
+</div>
+
+<hr style="margin:20px 0;border-color:#1f2937">
+
+<label>Upload PE File (.exe)</label>
+<input type="file" id="fileUpload" accept=".exe">
+<button onclick="scanFile()" class="btn primary">Scan Uploaded File</button>
+
+</div>
+
+<div id="detection-result" class="result-card hidden">
+<div class="result-header">
+<span id="result-decision" class="decision">UNKNOWN</span>
+<span id="result-timestamp" class="timestamp">--</span>
+</div>
+<div class="result-body">
+<div class="result-stat">
+<span class="label">Malware ID</span>
+<span id="res-request-id" class="value">--</span>
+</div>
+</div>
+</div>
+
+</div>
+
+
+<!-- ACTIVITY STREAM -->
+<div class="card glass activity-panel">
+
+<h3>Real-Time Analysis Stream</h3>
+
+<div class="activity-list" id="activity-list">
+<div class="empty-state" id="activity-empty">Waiting for scan activity...</div>
+</div>
+
+</div>
+
+
+<!-- THREAT FEED -->
+<div class="card glass threat-feed-card">
+
+<h3>Real-Time Threat Feed</h3>
+
+<div id="threatFeed"></div>
+
+</div>
+
+</div>
+
+</main>
+</div>
+
+<!-- LOADING -->
+<div id="loading-overlay" class="overlay hidden">
+<div class="spinner"></div>
+<p>Analyzing Neural Pattern...</p>
+</div>
+
+<style>
+.activity-entry {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.82rem;
+    display: grid;
+    grid-template-columns: 80px 1fr 80px;
+    gap: 8px;
+    align-items: start;
+}
+.activity-entry:last-child { border-bottom: none; }
+.activity-entry .a-time { color: #64748b; font-family: monospace; }
+.activity-entry .a-body { color: #cbd5e1; }
+.activity-entry .a-body .a-label { color: #94a3b8; font-size: 0.75rem; }
+.activity-entry .a-body .a-val  { color: #f1f5f9; font-weight: 600; }
+.activity-entry .a-verdict { text-align: right; font-weight: 700; font-size: 0.78rem; }
+.activity-entry .a-verdict.clean    { color: #10b981; }
+.activity-entry .a-verdict.suspicious { color: #ef4444; }
+.activity-entry .a-verdict.malicious  { color: #ef4444; }
+</style>
+
+<script src="app.js"></script>
+
+</body>
+</html>

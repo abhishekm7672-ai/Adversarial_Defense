@@ -1,0 +1,19 @@
+# API
+fastapi
+uvicorn[standard]
+slowapi
+python-multipart
+pydantic
+
+# ML Core
+torch
+numpy
+scikit-learn
+lightgbm
+joblib
+
+# PE Feature Extraction
+pefile
+
+# Utilities
+psutil

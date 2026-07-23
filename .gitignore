@@ -1,0 +1,13 @@
+.env
+venv/
+__pycache__/
+models/*.pkl
+models/*.pth
+logs/
+data/
+# Temporary files
+temp_*
+*.zip
+
+# Certificates
+certs/
